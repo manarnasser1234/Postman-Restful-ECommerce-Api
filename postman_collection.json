@@ -1,0 +1,1023 @@
+{
+	"info": {
+		"_postman_id": "b37880eb-7a7d-4233-a905-1bd92c5a5fbe",
+		"name": "E-Commerce",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27732608"
+	},
+	"item": [
+		{
+			"name": "register as User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 2s\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});\r",
+							"\r",
+							"var responseBody = pm.response.json();\r",
+							"\r",
+							"pm.test(\"check that response Body status valid is true\",function(){\r",
+							"    pm.expect(true).to.eql(responseBody.status);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"check that response Body message valid is تم التسجيل بنجاح\",function(){\r",
+							"    pm.expect(\"تم التسجيل بنجاح\").to.eql(responseBody.message);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"check that object includes data\", function () {\r",
+							"    pm.expect(responseBody.data).to.have.property(\"name\");\r",
+							"    pm.expect(responseBody.data).to.have.property(\"email\");\r",
+							"    pm.expect(responseBody.data).to.have.property(\"phone\");\r",
+							"    pm.expect(responseBody.data).to.have.property(\"id\");\r",
+							"    pm.expect(responseBody.data).to.have.property(\"image\");\r",
+							"    pm.expect(responseBody.data).to.have.property(\"token\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"check that Data types are correct\", function () {\r",
+							"    pm.expect(responseBody.data.name).to.be.a(\"string\");\r",
+							"    pm.expect(responseBody.data.email).to.be.a(\"string\");\r",
+							"    pm.expect(responseBody.data.phone).to.be.a(\"string\");\r",
+							"    pm.expect(responseBody.data.id).to.be.a(\"number\");\r",
+							"    pm.expect(responseBody.data.image).to.be.a(\"string\");\r",
+							"    pm.expect(responseBody.data.token).to.be.a(\"string\");\r",
+							"});\r",
+							"pm.test(\"Check That Name is correct\",function(){\r",
+							"    pm.expect(responseBody.data.name).to.eql(\"manar nasser\")\r",
+							"});\r",
+							"pm.test(\"Check That email is correct\",function(){\r",
+							"    pm.expect(responseBody.data.email).to.eql(\"manar1@example.com\")\r",
+							"});\r",
+							"pm.test(\"Check That phone is correct\",function(){\r",
+							"    pm.expect(responseBody.data.phone).to.eql(\"019345678901\")\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.environment.set(\"Token_register\", jsonData.data.token);\r",
+							"pm.environment.set(\"email\", jsonData.data.email);\r",
+							"pm.environment.set(\"phone\", jsonData.data.phone);\r",
+							"pm.environment.set(\"id\", jsonData.data.id);\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text",
+						"disabled": true
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"name\": \"manar nasser\",\r\n    \"email\": \"manar1@example.com\",\r\n    \"password\": \"Hello123@\",\r\n    \"phone\": \"019345678901\"\r\n\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_URL}}/register",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"register"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login as User",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 2s\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});\r",
+							"\r",
+							"var responseBody = pm.response.json();\r",
+							"\r",
+							"pm.test(\"check that response Body status valid is true\",function(){\r",
+							"    pm.expect(true).to.eql(responseBody.status);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"check that response Body message valid is تم تسجيل الدخول بنجاح\",function(){\r",
+							"    pm.expect(\"تم تسجيل الدخول بنجاح\").to.eql(responseBody.message);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that username is request\",function(){\r",
+							"    pm.expect(responseBody.data.name).to.eql(\"manar nasser\")\r",
+							"});\r",
+							"var email=pm.environment.get(\"email\")\r",
+							"var phone=pm.environment.get(\"phone\")\r",
+							"var id=pm.environment.get(\"id\")\r",
+							"pm.test(\"Check that email is request\",function(){\r",
+							"    pm.expect(responseBody.data.email).to.eql(email)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check phone value in request\",function(){\r",
+							"    pm.expect(responseBody.data.phone).to.equal(phone)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check That Register_id equal login_id\",function(){\r",
+							"    pm.expect(responseBody.data.id).to.equal(id)\r",
+							"});\r",
+							"\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.environment.set(\"Token_User_login\", jsonData.data.token);\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {
+					"content-type": true
+				}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\r\n\t\"password\": \"Hello123@\"\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_URL}}/login?email={{email}}",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"login"
+					],
+					"query": [
+						{
+							"key": "email",
+							"value": "{{email}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Get profile",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"pm.test(\"Response time is less than 2s\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});\r",
+							"var responseBody = pm.response.json();\r",
+							"\r",
+							"pm.test(\"check that response Body status valid is true\",function(){\r",
+							"    pm.expect(true).to.eql(responseBody.status);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"check that response Body message valid is null\",function(){\r",
+							"    pm.expect(null).to.eql(responseBody.message);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that username is request\",function(){\r",
+							"    pm.expect(responseBody.data.name).to.eql(\"manar nasser\")\r",
+							"});\r",
+							"var email=pm.environment.get(\"email\")\r",
+							"var phone=pm.environment.get(\"phone\")\r",
+							"var id=pm.environment.get(\"id\")\r",
+							"var token=pm.environment.get(\"Token_User_login\")\r",
+							"pm.test(\"Check that email is request\",function(){\r",
+							"    pm.expect(responseBody.data.email).to.eql(email)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check phone value in request\",function(){\r",
+							"    pm.expect(responseBody.data.phone).to.equal(phone)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check That Register_id equal login_id\",function(){\r",
+							"    pm.expect(responseBody.data.id).to.equal(id)\r",
+							"});\r",
+							"pm.test(\"Check That token equal login_token\",function(){\r",
+							"    pm.expect(responseBody.data.token).to.equal(token)\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Token_User_login}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_URL}}/profile",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"profile"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Search on categories",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 2s\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});\r",
+							"\r",
+							"var responseBody=pm.response.json();\r",
+							"pm.test(\"Check that response Body Status valid is true\",function(){\r",
+							"    pm.expect(responseBody.status).to.eql(true)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that data includes Six current\",function(){\r",
+							"    pm.expect(responseBody.data.total).to.eql(6);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_URL}}/categories",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"categories"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Create product",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Defined jsonData before using it in the test script\r",
+							"var responseBody = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 20s\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(20000);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that object includes data\", function () {\r",
+							"    pm.expect(responseBody).to.have.property(\"data\");\r",
+							"});\r",
+							"// var jsonData=pm.response.json();\r",
+							"// pm.environment.set(\"Product_id\", jsonData.data.data[2].id)\r",
+							"\r",
+							"if (responseBody.data && responseBody.data.data && responseBody.data.data.length > 0) {\r",
+							"    pm.environment.set(\"product_id\", responseBody.data.data[2].id);\r",
+							"    pm.environment.set(\"product_price\", responseBody.data.data[2].price);\r",
+							"    pm.environment.set(\"product_name\", responseBody.data.data[2].name);\r",
+							"    pm.environment.set(\"product_discount\", responseBody.data.data[2].discount);\r",
+							"} else {\r",
+							"    console.log(\"Data not found\");\r",
+							"}\r",
+							"pm.test(\"Check that data includes 21 Product\",function(){\r",
+							"    pm.expect(responseBody.data.total).to.eql(21);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_URL}}/products/search",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"products",
+						"search"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "AddToCart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"// Fixed the syntax error in accessing the product array index\r",
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 2s\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});\r",
+							"\r",
+							"var responseBody = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Check that response Body status valid is true\",function(){\r",
+							"    pm.expect(responseBody.status).to.eql(true);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that response Body message valid is Added Successfully\",function(){\r",
+							"    pm.expect(responseBody.message).to.eql(\"Added Successfully\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that object includes data\", function () {\r",
+							"    pm.expect(responseBody).to.have.property(\"data\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"var responseBody = pm.response.json();\r",
+							"var product_id =pm.environment.get(\"product_id\")\r",
+							"var product_price=pm.environment.get(\"product_price\")\r",
+							"var product_name=pm.environment.get(\"product_name\")\r",
+							"var product_discount=pm.environment.get(\"product_discount\");\r",
+							"pm.test(\"Check that  product ID is Correct\", function () {\r",
+							"    pm.expect(responseBody.data.product.id).to.eql(product_id);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that product price is Correct  \", function () {\r",
+							"    pm.expect(responseBody.data.product.price).to.eql(product_price);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that  product Name is Correct \", function () {\r",
+							"    pm.expect(responseBody.data.product.name).to.eql(product_name);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that product quantity is Correct\", function () {\r",
+							"    pm.expect(responseBody.data.quantity).to.eql(1);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that product discount is Correct\", function () {\r",
+							"    pm.expect(responseBody.data.product.discount).to.eql(product_discount); \r",
+							"});\r",
+							"\r",
+							"\r",
+							"var jsonData=pm.response.json();\r",
+							"pm.environment.set(\"Cart_ID\", jsonData.data.id);\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Token_User_login}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_URL}}/carts?product_id={{product_id}}",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"carts"
+					],
+					"query": [
+						{
+							"key": "product_id",
+							"value": "{{product_id}}"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Add Order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 2s\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});\r",
+							"\r",
+							"var responseBody =pm.response.json();\r",
+							"\r",
+							"pm.test(\"Check that response Body status valid is true\",function(){\r",
+							"    pm.expect(responseBody.status).to.eql(true);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that response Body message valid is تمت الإضافة بنجاح\",function(){\r",
+							"    pm.expect(responseBody.message).to.eql(\"تمت الإضافة بنجاح\");\r",
+							"});\r",
+							"\r",
+							"var jsonData = pm.response.json();\r",
+							"pm.environment.set(\"Order_iD\", jsonData.data.id);\r",
+							"pm.environment.set(\"Order_discount\", jsonData.data.discount);\r",
+							"pm.environment.set(\"Order_points\", jsonData.data.points);\r",
+							"pm.environment.set(\"Order_total\", jsonData.data.total)\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disabledSystemHeaders": {}
+			},
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Token_User_login}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "{{Cart_ID}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n   \"address_id\": 35,\r\n   \"payment_method\": 1,\r\n   \"use_points\": \"false\"\r\n    \r\n   \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_URL}}/orders",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"orders"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Order Details",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"var responseBody = pm.response.json();\r",
+							"\r",
+							"pm.test(\"Check that response Body status valid is true\",function(){\r",
+							"    pm.expect(responseBody.status).to.eql(true);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that response Body message valid is Added Successfully\",function(){\r",
+							"    pm.expect(responseBody.message).to.not.eql(\"Added Successfully\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that object includes data\", function () {\r",
+							"    pm.expect(responseBody).to.have.property(\"data\");\r",
+							"});\r",
+							"\r",
+							"var Order_iD=pm.environment.get(\"Order_iD\")\r",
+							"var product_price=pm.environment.get(\"product_price\")\r",
+							"var Order_discount=pm.environment.get(\"Order_discount\")\r",
+							"var Order_points=pm.environment.get(\"Order_points\")\r",
+							"var Order_total=pm.environment.get(\"Order_total\")\r",
+							"\r",
+							"pm.test(\"Check that Order_iD eql responseBodyID\",function(){\r",
+							"    pm.expect(responseBody.data.id).to.eql(Order_iD);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that product_price eql responseBodycost\",function(){\r",
+							"    pm.expect(responseBody.data.cost).to.eql(product_price);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that Order_discount eql responseBodydiscount\",function(){\r",
+							"    pm.expect(responseBody.data.discount).to.eql(Order_discount);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that Order_points eql responseBodydiscount\",function(){\r",
+							"    pm.expect(responseBody.data.points).to.eql(Order_points);\r",
+							"});\r",
+							"pm.test(\"Check that Order_total eql responseBodydiscount\",function(){\r",
+							"    pm.expect(responseBody.data.total).to.eql(Order_total);\r",
+							"});\r",
+							"\r",
+							"pm.environment.set(\"product_Date\", responseBody.data.date);\r",
+							"var product_Date=pm.environment.get(\"product_Date\")\r",
+							"pm.test(\"Check that product_Date eql responseBodyDate\",function(){\r",
+							"    pm.expect(responseBody.data.date).to.eql(product_Date);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Correct product_Status \", function () {\r",
+							"    pm.expect(responseBody.data.status).to.eql(\"جديد\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Token_User_login}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "{{Order_iD}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_URL}}/orders/{{Order_iD}}",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"orders",
+						"{{Order_iD}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Cancel Order",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 2s\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});\r",
+							"\r",
+							"var responseBody=pm.response.json();\r",
+							"pm.test(\"Check that response Body status valid is true \",function(){\r",
+							"    pm.expect(responseBody.status).to.eql(true);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that response Body message valid is لا يمكن الغاء هذا الطلب \",function(){\r",
+							"    pm.expect(responseBody.message).to.eql(\"تم التعديل بنجاح\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that response Body incluod data \",function(){\r",
+							"    pm.expect(responseBody.data).to.not.eql(null);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that response Body incluod Order_id \",function(){\r",
+							"    pm.expect(responseBody.data.id).to.eql(pm.variables.get(\"Order_iD\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that response Body incluod product_cost \",function(){\r",
+							"    pm.expect(responseBody.data.cost).to.eql(pm.variables.get(\"product_price\"));\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that response Body incluod product_total \",function(){\r",
+							"    pm.expect(responseBody.data.total).to.eql(pm.variables.get(\"Order_total\"));\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Token_User_login}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_URL}}/orders/{{Order_iD}}/cancel",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"orders",
+						"{{Order_iD}}",
+						"cancel"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Delete Cart",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 2s\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});\r",
+							"\r",
+							"var responseBody = pm.response.json();\r",
+							"pm.test(\"Check that response Body status valid is false\",function(){\r",
+							"    pm.expect(responseBody.status).to.eql(false);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that response Body message valid is غير مصرح لك\",function(){\r",
+							"    pm.expect(responseBody.message).to.eql(\"غير مصرح لك\");\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that response Body incluod data\",function(){\r",
+							"    pm.expect(responseBody.data).to.not.eql(null);\r",
+							"});\r",
+							"\r",
+							"\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "DELETE",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_URL}}/carts/{{Cart_ID}}",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"carts",
+						"{{Cart_ID}}"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Logout",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 2s\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});\r",
+							"\r",
+							"var responseBody = pm.response.json();\r",
+							"pm.test(\"Check that response Body status valid is true \", function () {\r",
+							"    pm.expect(responseBody.status).to.eql(true)\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that response Body message valid is تم تسجيل الخروج بنجاح \", function () {\r",
+							"    pm.expect(responseBody.message).to.eql(\"تم تسجيل الخروج بنجاح\")\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that object includes data\", function () {\r",
+							"    pm.expect(responseBody).to.have.property(\"data\");\r",
+							"});\r",
+							"\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Token_User_login}}",
+						"type": "text"
+					}
+				],
+				"url": {
+					"raw": "{{base_URL}}/logout",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"logout"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Login again",
+			"event": [
+				{
+					"listen": "test",
+					"script": {
+						"exec": [
+							"pm.test(\"Status code is 200\", function () {\r",
+							"    pm.response.to.have.status(200);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Response time is less than 2s\", function () {\r",
+							"    pm.expect(pm.response.responseTime).to.be.below(2000);\r",
+							"});\r",
+							"var responseBody=pm.response.json();\r",
+							"pm.test(\"Check that response Body status valid is true\",function(){\r",
+							"    pm.expect(responseBody.status).to.eql(false);\r",
+							"});\r",
+							"\r",
+							"pm.test(\"Check that response Body message valid is not acsses\",function(){\r",
+							"    pm.expect(responseBody.message).to.eql(\"لم نتمكن من تسجيل الدخول برجاء التأكد من البيانات المدخلة\");\r",
+							"});\r",
+							"\r",
+							""
+						],
+						"type": "text/javascript",
+						"packages": {}
+					}
+				}
+			],
+			"request": {
+				"auth": {
+					"type": "noauth"
+				},
+				"method": "POST",
+				"header": [
+					{
+						"key": "Content-Type",
+						"value": "application/json",
+						"type": "text"
+					},
+					{
+						"key": "Authorization",
+						"value": "{{Token_User_login}}",
+						"type": "text"
+					},
+					{
+						"key": "Accept",
+						"value": "application/json",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n\t\"email\": \"manar61@gmail.com\",\r\n\t\"password\": \"Hello1243@\"\r\n    \r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "{{base_URL}}/login",
+					"host": [
+						"{{base_URL}}"
+					],
+					"path": [
+						"login"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
